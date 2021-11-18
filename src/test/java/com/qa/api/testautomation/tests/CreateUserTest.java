@@ -1,5 +1,8 @@
 package com.qa.api.testautomation.tests;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,9 +25,11 @@ public class CreateUserTest {
 	}
 	@Test(dataProvider = "getUserData")
 	public void createUserAPIPOSTTest(String name ,String gender ,String dob ,String email ,String phoneNumber ,String status) {
+		Map<String , String> authTokenMap = new HashMap<String , String>();
+		authTokenMap.put("Authorization", "Bearer " +token);
 	//	User user = new User("George_2" ,"male" ,"20-01-2012" ,"testautomation3@gmail.com" ,"+91-8885858","active");
 		User user = new User(name , gender , dob , email , phoneNumber , status);
-		Response response = RestClient.doPost("JSON", baseURI, basePath, token, null, true, user);
+		Response response = RestClient.doPost("JSON", baseURI, basePath, authTokenMap, null, true, user);
 		System.out.println(response.getStatusCode());
 		response.prettyPrint();
 		System.out.println("-------------------------------");
